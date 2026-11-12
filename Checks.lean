@@ -53,3 +53,17 @@ import TrustTasks
 #print axioms TrustTasks.Roster.covered_admits_narrow_counter
 #print axioms TrustTasks.Roster.covered_on_accept
 #print axioms TrustTasks.Roster.code_not_unique
+#print axioms TrustTasks.VtcRoles.remove_last_holder
+#print axioms TrustTasks.VtcRoles.no_recovery
+#print axioms TrustTasks.VtcRoles.removal_bypasses_item10
+#print axioms TrustTasks.VtcRoles.guarded_floor
+#print axioms TrustTasks.VtcRoles.guarded_refuses_last
+#print axioms TrustTasks.VtcRoles.guarded_nonvacuous
+#print axioms TrustTasks.VtcRoles.removed_still_assigns
+#print axioms TrustTasks.VtcRoles.removed_ending_entry_cannot_assign
+#print axioms TrustTasks.Onboarding.published_is_apply_and_decide
+#print axioms TrustTasks.Onboarding.reciprocate_never_required
+#print axioms TrustTasks.Onboarding.presence_only_blind
+#print axioms TrustTasks.Onboarding.no_presence_predicate
+#print axioms TrustTasks.Onboarding.proposed_is_intended
+#print axioms TrustTasks.Onboarding.proposed_nonvacuous

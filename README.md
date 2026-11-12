@@ -54,6 +54,38 @@ The MyTerms roster as published at agreements.info (the machine-readable JSON of
 
 Not modelled: signatures, digests, issuer binding and round limits (MyTerms.lean, Ceremony.lean), prohibitions as distinct from absent purposes, and the exchange's questions.
 
+## TrustTasks/VtcRoles.lean
+
+Who may still assign roles in a Verifiable Trust Community (upstream main 2e3149010). `vtc/members/role/set/0.1` item 10 refuses a move that would leave no live holder of `vtc.roles.assign`, or fewer than the consent threshold, because "a community that could no longer grant or consent to authority could not repair itself"; `vtc/members/purge/0.1` has a `lastAdministrator` guard with no override. `vtc/members/admin-remove/0.1` and `vtc/members/self-remove/0.1` remove a member (`disposition: purge` included) with no such guard, and the registry reads removal's effect on the access-control entry both ways: `vtc/members/admit/0.1` says a former member has no entry, `vtc/members/make-membership/0.1` gives the example of one whose entry was kept.
+
+| theorem | what it shows |
+|---|---|
+| `remove_last_holder` | today the last holder of `vtc.roles.assign` can be removed, or remove themselves |
+| `no_recovery` | a community with no live holder never regains one: item 10's "could not repair itself", proved |
+| `removal_bypasses_item10` | at two holders and a threshold of two, item 10 refuses either demotion, while removal takes the community below its threshold and then to no holder |
+| `guarded_floor` | with item 10's guard on removal too, a community at or above its floor stays there |
+| `guarded_refuses_last` | guarded, the last holder cannot be removed, at any threshold |
+| `guarded_nonvacuous` | the guard still lets a holder go when enough remain |
+| `removed_still_assigns` | if removal keeps the entry, a removed administrator still passes item 1 and counts toward item 10's floor |
+| `removed_ending_entry_cannot_assign` | if removal ends the entry, it does not; hence the fix pairs the guard with removal ending the entry |
+
+Not modelled: identities beyond the holder count, other capabilities and qualifiers (items 6 and 9), approval and parking (items 11 to 13), serialisation (item 14; steps are atomic), and `vtc/roles/define`.
+
+## TrustTasks/Onboarding.lean
+
+`vtc/member-onboarding/0.1` (upstream main 2e3149010) against trustoverip/dtgwg-trust-tasks-spec#52. Its step descriptions say an enactment completes on a rejection at `decide`, or on an approval followed by `reciprocate`; its completion predicate is `allOf[apply, decide, anyOf[decide, reciprocate]]`, read by presence.
+
+| theorem | what it shows |
+|---|---|
+| `published_is_apply_and_decide` | the published predicate is `apply ∧ decide`: the `anyOf` is absorbed |
+| `reciprocate_never_required` | an approved member who never reciprocates completes, as a rejected applicant does; the intent completes only the second |
+| `presence_only_blind` | a presence-only predicate gives the same answer for any two enactments with the same steps present |
+| `no_presence_predicate` | no predicate today's schema can state matches the ceremony's intent |
+| `proposed_is_intended` | with one declared read of `decide`'s `decision` (spec#52's proposal), the intent is stated exactly |
+| `proposed_nonvacuous` | that predicate completes a rejection and a reciprocated approval, and not an unreciprocated approval |
+
+Not modelled: optional steps other than `reciprocate`, rounds, ordering, `maxDuration`, evidence, and every step's content but `decide`'s.
+
 ## TrustTasks/Rulings.lean
 
 Four rulings requested on trustoverip/dtgwg-trust-tasks-spec#31, each a small model with the theorem that captures it and a counterexample under the alternative the ruling rejected.
