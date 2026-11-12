@@ -21,6 +21,20 @@ Lean 4 models of Trust Tasks protocol families and ceremonies. Core Lean only (n
 
 A **gap** is a counterexample admitted by the rules as written, stated in the file with the spec text it reads and, where one exists, a proven fix. Quoted spec text is from the upstream commit named. Every gap has been raised upstream: `tf#` is an issue or PR on trustoverip/dtgwg-trust-tasks-tf, `spec#` an issue on trustoverip/dtgwg-trust-tasks-spec.
 
+## Evidence
+
+[`evidence/2026-11-12_tt183/`](evidence/2026-11-12_tt183/) seals this repository at `c220a49` as a κ evidence bundle: every source file, the raw `Checks.lean` audit output, and one object per audited theorem (183), each with a `refers-to` edge to the file that states it.
+
+Root: `sha256:adcfbf13822fda9e630609b7fa503fb01727cc32b2a978a1c71c71f3e98a15b6` (BLAKE3 `a77baee86ea7e43b3008791dbf773df0b26375eeebd61c6557f753e1857e7c11`).
+
+Re-derive every hash from the bundle alone with [kappa-evidence-mage](https://github.com/mitchuski/kappa-evidence-mage):
+
+```bash
+python kappa-evidence-mage/verify_bundle.py evidence/2026-11-12_tt183   # RESULT: OK
+```
+
+The bundle's files are bytes, not text (`.gitattributes`), so a checkout never rewrites them. The root is also listed with every hash under it at [formal.mages.city](https://formal.mages.city/).
+
 ## TrustTasks/MyTerms.lean
 
 IEEE Std 7012-2025 (MyTerms) carried as `myterms/propose`, after the outline on trustoverip/dtgwg-trust-tasks-spec#43, with a comprehension exchange in front of it as in trustoverip/dtgwg-trust-tasks-tf#904. Prior work: trustoverip/dtgwg-trust-tasks-tf#856 and its implementation in mitchuski/star-key (`packages/core/src/vtc/myterms.ts`, `agreements.ts`).
