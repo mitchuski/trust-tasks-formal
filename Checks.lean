@@ -46,3 +46,10 @@ import TrustTasks
 #print axioms TrustTasks.Rulings.Defaults.omission_indistinguishable
 #print axioms TrustTasks.Rulings.Defaults.shared_default_wrong_somewhere
 #print axioms TrustTasks.Rulings.Defaults.default_sound_iff_governance
+#print axioms TrustTasks.Roster.sealed_in_roster
+#print axioms TrustTasks.Roster.counter_escapes_exchange
+#print axioms TrustTasks.Roster.covered_sound
+#print axioms TrustTasks.Roster.covered_refuses_broad_counter
+#print axioms TrustTasks.Roster.covered_admits_narrow_counter
+#print axioms TrustTasks.Roster.covered_on_accept
+#print axioms TrustTasks.Roster.code_not_unique

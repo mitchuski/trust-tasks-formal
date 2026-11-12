@@ -21,6 +21,8 @@ IEEE Std 7012-2025 (MyTerms) carried as `myterms/propose`, after the outline on 
 
 Not modelled: signatures (a request's issuer is taken as authenticated by the envelope), digests, time, transport, the roster's neutrality, `myterms/accepted`, and what the agreements mean.
 
+`contractId` follows the spec#43 outline of `myterms/propose`. In `understanding/seal/0.1` as of #904 head 83af40f the response carries no contract identifier; an accepted response is tied to the agreement it seals by `taskContext` and `taskDigestMultibase` over the request, which plays the same part in `decision_member_suffices`.
+
 ## TrustTasks/Ceremony.lean
 
 A ceremony definition's completion predicate, after trustoverip/dtgwg-trust-tasks-tf#904 open item 7: today a step in a completion predicate is satisfied when the step is present (`ceremony.meta.schema.json`, `$defs.Predicate`), so a refused seal completes `understanding/proof-of-understanding/0.1`. The proposal: a step may declare the success-response member and value its completion reads (e.g. `/payload/decision` = `accepted`), and every step's parties come from one role binding, the one the opening step fixes.
@@ -35,6 +37,22 @@ A ceremony definition's completion predicate, after trustoverip/dtgwg-trust-task
 | `party_binding_needed` | reading the declared members without the party binding lets one party's comprehension complete another party's agreement |
 
 Not modelled: the `anyOf` and `threshold` combinators, optional steps, `perRole` multiplicity, `maxRounds`, `prev` ordering, `maxDuration`, nested ceremonies, evidence levels, signatures and digests. Each terminal document is taken to have passed SPEC §4.9.4 checks 1, 2 and 4.
+
+## TrustTasks/Roster.lean
+
+The MyTerms roster as published at agreements.info (the machine-readable JSON of each relationship agreement, version 1.1, read 2026-11-12), read against `understanding/seal/0.1` on trustoverip/dtgwg-trust-tasks-tf#904 (head 83af40f). The SD-BASE line, by `purposes`, is a chain: SD-BASE ⊂ SD-BASE-A ⊂ SD-BASE-AT ⊂ SD-BASE-ATP ⊂ SD-BASE-ATP3. The seal spec notes that a counter can name terms the exchange never tested; this file makes that concrete and proves a completion rule that closes it without a second exchange.
+
+| theorem | what it shows |
+|---|---|
+| `sealed_in_roster` | under #904's rules, a sealed agreement is in the roster |
+| `counter_escapes_exchange` | tested on SD-BASE, countered with SD-BASE-ATP3, follow-up accepted: admissible and complete, and the binding terms permit third-party sharing, tracking and profiling the tested terms do not |
+| `covered_sound` | completion that also checks the tested agreement covers every purpose of the sealed one gives a roster agreement the individual was tested on, purpose by purpose |
+| `covered_refuses_broad_counter` | that completion refuses the SD-BASE → SD-BASE-ATP3 engagement |
+| `covered_admits_narrow_counter` | it still admits a counter to narrower terms (SD-BASE-ATP → SD-BASE-A) with no second exchange |
+| `covered_on_accept` | a direct acceptance always passes it |
+| `code_not_unique` | two published agreements carry the JSON `id` "SD-BASE" with different purposes, so naming an agreement by `id` does not fix what was agreed |
+
+Not modelled: signatures, digests, issuer binding and round limits (MyTerms.lean, Ceremony.lean), prohibitions as distinct from absent purposes, and the exchange's questions.
 
 ## TrustTasks/Rulings.lean
 
