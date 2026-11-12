@@ -4,22 +4,22 @@ Lean 4 models of Trust Tasks protocol families and ceremonies. Core Lean only (n
 
 ## Models
 
-| file | family or ceremony | upstream | result | theorems |
+| file | family or ceremony | read at; raised in | result | theorems |
 |---|---|---|---|---|
-| [MyTerms](TrustTasks/MyTerms.lean) | `myterms/propose` + comprehension ceremony (IEEE 7012) | spec#43, tf#904 | a closed `decision` suffices for completion; issuer binding and round limit needed | 13 |
-| [Ceremony](TrustTasks/Ceremony.lean) | ceremony completion predicate | spec#52 | presence-only completion accepts a refused seal; declared read + party binding sound | 7 |
-| [Roster](TrustTasks/Roster.lean) | agreements.info roster × `understanding/seal` | tf#904 83af40f | **gap**: a counter seals untested terms; coverage check fixes it; duplicate `id`s | 7 |
-| [VtcRoles](TrustTasks/VtcRoles.lean) | `vtc/members/*` role assigners | main 2e3149010 | **gap**: removal bypasses the last-assigner guard; removal's effect on the entry read both ways | 8 |
-| [Onboarding](TrustTasks/Onboarding.lean) | `vtc/member-onboarding` ceremony | main 2e3149010, spec#52 | **gap**: `reciprocate` never required; no presence-only predicate states the intent | 6 |
-| [Rulings](TrustTasks/Rulings.lean) | four rulings | spec#31 (#36–#39) | each ruling sound; the rejected alternative fails | 27 |
-| [TaskConsent](TrustTasks/TaskConsent.lean) | `task-consent/*` threshold approval | main 101a51d8d | confirmation; **gap**: an unmeetable `minApprovals` is accepted and never runs | 16 |
-| [AclDelegation](TrustTasks/AclDelegation.lean) | `acl/*/0.3` delegation | main 101a51d8d | cascade confirmed; **gap**: a third-party amendment escapes `delegatedBy`; "queued" may stay in force | 25 |
-| [JoinRequests](TrustTasks/JoinRequests.lean) | `vtc/join-requests/*` lifecycle | main 101a51d8d | **gap**: the ceremony cannot complete under `submit/0.3`; a maintainer cannot close a deferred request | 20 |
-| [VettingCount](TrustTasks/VettingCount.lean) | vetting statement counting | main 101a51d8d | **gap**: caps read globally are non-monotone; on one reading a notice swallows the issuer's withdrawal | 24 |
-| [DidRollback](TrustTasks/DidRollback.lean) | `did-management/did/*` rollback, register | main 101a51d8d | **gap**: rollback rewrites published versions and depends on timing; register drops the extension check | 17 |
+| [MyTerms](TrustTasks/MyTerms.lean) | `myterms/propose` + comprehension ceremony (IEEE 7012) | [spec#43](https://github.com/trustoverip/dtgwg-trust-tasks-spec/issues/43), [tf#904](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/904) | a closed `decision` suffices for completion; issuer binding and round limit needed | 13 |
+| [Ceremony](TrustTasks/Ceremony.lean) | ceremony completion predicate | [spec#52](https://github.com/trustoverip/dtgwg-trust-tasks-spec/issues/52) | presence-only completion accepts a refused seal; declared read + party binding sound | 7 |
+| [Roster](TrustTasks/Roster.lean) | agreements.info roster × `understanding/seal` | [tf#904](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/904) at 83af40f | **gap**: a counter seals untested terms; coverage check fixes it; duplicate `id`s | 7 |
+| [VtcRoles](TrustTasks/VtcRoles.lean) | `vtc/members/*` role assigners | main 2e3149010; [tf#1218](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1218) | **gap**: removal bypasses the last-assigner guard; removal's effect on the entry read both ways | 8 |
+| [Onboarding](TrustTasks/Onboarding.lean) | `vtc/member-onboarding` ceremony | main 2e3149010; [spec#52](https://github.com/trustoverip/dtgwg-trust-tasks-spec/issues/52) | **gap**: `reciprocate` never required; no presence-only predicate states the intent | 6 |
+| [Rulings](TrustTasks/Rulings.lean) | four rulings | [spec#31](https://github.com/trustoverip/dtgwg-trust-tasks-spec/issues/31) (#36–#39) | each ruling sound; the rejected alternative fails | 27 |
+| [TaskConsent](TrustTasks/TaskConsent.lean) | `task-consent/*` threshold approval | main 101a51d8d; [tf#1219](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1219) | confirmation; **gap**: an unmeetable `minApprovals` is accepted and never runs | 16 |
+| [AclDelegation](TrustTasks/AclDelegation.lean) | `acl/*/0.3` delegation | main 101a51d8d; [tf#1220](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1220) | cascade confirmed; **gap**: a third-party amendment escapes `delegatedBy`; "queued" may stay in force | 25 |
+| [JoinRequests](TrustTasks/JoinRequests.lean) | `vtc/join-requests/*` lifecycle | main 101a51d8d; [tf#1221](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1221) | **gap**: the ceremony cannot complete under `submit/0.3`; a maintainer cannot close a deferred request | 20 |
+| [VettingCount](TrustTasks/VettingCount.lean) | vetting statement counting | main 101a51d8d; [tf#1222](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1222) | **gap**: caps read globally are non-monotone; on one reading a notice swallows the issuer's withdrawal | 24 |
+| [DidRollback](TrustTasks/DidRollback.lean) | `did-management/did/*` rollback, register | main 101a51d8d; [tf#1223](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1223) | **gap**: rollback rewrites published versions and depends on timing; register drops the extension check | 17 |
 | [VotingTrustees](TrustTasks/VotingTrustees.lean) | `voting/trustees/*` | main 101a51d8d | confirmation: the threshold counting holds as written | 13 |
 
-A **gap** is a counterexample admitted by the rules as written, stated in the file with the spec text it reads and, where one exists, a proven fix. Quoted spec text is from the upstream commit named.
+A **gap** is a counterexample admitted by the rules as written, stated in the file with the spec text it reads and, where one exists, a proven fix. Quoted spec text is from the upstream commit named. Every gap has been raised upstream: `tf#` is an issue or PR on trustoverip/dtgwg-trust-tasks-tf, `spec#` an issue on trustoverip/dtgwg-trust-tasks-spec.
 
 ## TrustTasks/MyTerms.lean
 
