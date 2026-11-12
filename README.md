@@ -24,17 +24,17 @@ A **gap** is a counterexample admitted by the rules as written, stated in the fi
 
 ## Evidence
 
-[`evidence/2026-11-12_tt183/`](evidence/2026-11-12_tt183/) seals this repository at `c220a49` as a κ evidence bundle: every source file, the raw `Checks.lean` audit output, and one object per audited theorem (183), each with a `refers-to` edge to the file that states it.
+[`evidence/2026-11-12_tt188/`](evidence/2026-11-12_tt188/) seals this repository at `34d3353` as a κ evidence bundle: every source file, the raw `Checks.lean` audit output, and one object per audited theorem (188), each with a `refers-to` edge to the file that states it.
 
-Root: `sha256:adcfbf13822fda9e630609b7fa503fb01727cc32b2a978a1c71c71f3e98a15b6` (BLAKE3 `a77baee86ea7e43b3008791dbf773df0b26375eeebd61c6557f753e1857e7c11`).
+Root: `sha256:c52609b736406d6fe646db7e735e7380d4fb6309cc9c481480fb9709c5077e8e` (BLAKE3 `99bb5f9031a804dfff8d5dbb4a17c3b499de6cea541ef480775170a9348dd63d`).
 
 Re-derive every hash from the bundle alone with [kappa-evidence-mage](https://github.com/mitchuski/kappa-evidence-mage):
 
 ```bash
-python kappa-evidence-mage/verify_bundle.py evidence/2026-11-12_tt183   # RESULT: OK
+python kappa-evidence-mage/verify_bundle.py evidence/2026-11-12_tt188   # RESULT: OK
 ```
 
-The bundle's files are bytes, not text (`.gitattributes`), so a checkout never rewrites them. The root is also listed with every hash under it at [formal.mages.city](https://formal.mages.city/).
+The earlier seal, [`evidence/2026-11-12_tt183/`](evidence/2026-11-12_tt183/) (183 theorems at `c220a49`, root `sha256:adcfbf13822fda9e630609b7fa503fb01727cc32b2a978a1c71c71f3e98a15b6`), stays as it was minted: it is the one cited on tf#904. Bundle files are bytes, not text (`.gitattributes`), so a checkout never rewrites them. The roots are also listed with every hash under them at [formal.mages.city](https://formal.mages.city/).
 
 ## TrustTasks/MyTerms.lean
 
