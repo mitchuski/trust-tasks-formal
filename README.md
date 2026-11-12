@@ -2,6 +2,25 @@
 
 Lean 4 models of Trust Tasks protocol families and ceremonies. Core Lean only (no Mathlib); the trusted base is the Lean kernel plus `propext`, `Classical.choice` and `Quot.sound`.
 
+## Models
+
+| file | family or ceremony | upstream | result | theorems |
+|---|---|---|---|---|
+| [MyTerms](TrustTasks/MyTerms.lean) | `myterms/propose` + comprehension ceremony (IEEE 7012) | spec#43, tf#904 | a closed `decision` suffices for completion; issuer binding and round limit needed | 13 |
+| [Ceremony](TrustTasks/Ceremony.lean) | ceremony completion predicate | spec#52 | presence-only completion accepts a refused seal; declared read + party binding sound | 7 |
+| [Roster](TrustTasks/Roster.lean) | agreements.info roster × `understanding/seal` | tf#904 83af40f | **gap**: a counter seals untested terms; coverage check fixes it; duplicate `id`s | 7 |
+| [VtcRoles](TrustTasks/VtcRoles.lean) | `vtc/members/*` role assigners | main 2e3149010 | **gap**: removal bypasses the last-assigner guard; removal's effect on the entry read both ways | 8 |
+| [Onboarding](TrustTasks/Onboarding.lean) | `vtc/member-onboarding` ceremony | main 2e3149010, spec#52 | **gap**: `reciprocate` never required; no presence-only predicate states the intent | 6 |
+| [Rulings](TrustTasks/Rulings.lean) | four rulings | spec#31 (#36–#39) | each ruling sound; the rejected alternative fails | 27 |
+| [TaskConsent](TrustTasks/TaskConsent.lean) | `task-consent/*` threshold approval | main 101a51d8d | confirmation; **gap**: an unmeetable `minApprovals` is accepted and never runs | 16 |
+| [AclDelegation](TrustTasks/AclDelegation.lean) | `acl/*/0.3` delegation | main 101a51d8d | cascade confirmed; **gap**: a third-party amendment escapes `delegatedBy`; "queued" may stay in force | 25 |
+| [JoinRequests](TrustTasks/JoinRequests.lean) | `vtc/join-requests/*` lifecycle | main 101a51d8d | **gap**: the ceremony cannot complete under `submit/0.3`; a maintainer cannot close a deferred request | 20 |
+| [VettingCount](TrustTasks/VettingCount.lean) | vetting statement counting | main 101a51d8d | **gap**: caps read globally are non-monotone; on one reading a notice swallows the issuer's withdrawal | 24 |
+| [DidRollback](TrustTasks/DidRollback.lean) | `did-management/did/*` rollback, register | main 101a51d8d | **gap**: rollback rewrites published versions and depends on timing; register drops the extension check | 17 |
+| [VotingTrustees](TrustTasks/VotingTrustees.lean) | `voting/trustees/*` | main 101a51d8d | confirmation: the threshold counting holds as written | 13 |
+
+A **gap** is a counterexample admitted by the rules as written, stated in the file with the spec text it reads and, where one exists, a proven fix. Quoted spec text is from the upstream commit named.
+
 ## TrustTasks/MyTerms.lean
 
 IEEE Std 7012-2025 (MyTerms) carried as `myterms/propose`, after the outline on trustoverip/dtgwg-trust-tasks-spec#43, with a comprehension exchange in front of it as in trustoverip/dtgwg-trust-tasks-tf#904. Prior work: trustoverip/dtgwg-trust-tasks-tf#856 and its implementation in mitchuski/star-key (`packages/core/src/vtc/myterms.ts`, `agreements.ts`).
@@ -117,6 +136,127 @@ Four rulings requested on trustoverip/dtgwg-trust-tasks-spec#31, each a small mo
 
 Not modelled: see the comment at the head of each section of the file.
 
-Check: `lake build`, `lake env lean Checks.lean` (axiom footprints; no `sorry`), `lake env leanchecker --fresh TrustTasks` (independent kernel replay).
+## TrustTasks/TaskConsent.lean
+
+Threshold approval in `task-consent/request/0.1` and `task-consent/decision/0.2` (upstream main 101a51d8d). Decision/0.2 states the invariant: nothing executes without a single-use decision by a currently-enrolled approver over the exact digest, with policy and enrolment re-checked at execution.
+
+| theorem | what it shows |
+|---|---|
+| `execution_sound` | an execution is the first and only one, runs the approved digest, and is carried by at least `minApprovals` distinct approvers who are in the set, are not the excluded requester, and are enrolled at that moment |
+| `at_most_once` | item 13: at most one execution, of the approved digest |
+| `deny_final` | item 9: once a deny is accepted, the task never runs |
+| `granted_closed` | once granted, the request is decided and takes no further decision (`noPending`), so no deny lands between grant and execution |
+| `execution_sound_nonvacuous` | two of three approvers (the third the excluded requester) approve and the task runs |
+| `distinct_needed` | without idempotent recording, one approver's two approvals meet a threshold of two |
+| `consume_at_execution_needed` | with the challenge consumed on receipt, the executor's retry runs the task twice |
+| `recheck_needed` | without item 14, an approver revoked after approving still carries the task |
+| `deny_closes_needed` | without item 9, a deny is answered and the task still runs |
+| `exclusion_needed` | items 5 and 6 at receipt are subsumed by item 14; without both, the requester carries its own task |
+| `unmeetable_accepted_never_runs` | a request whose `minApprovals` exceeds its eligible approvers (the schema allows it) is prompted, records approvals, and never runs |
+| `runs_only_if_feasible` | a check at request time that enough distinct eligible enrolled approvers exist refuses nothing that could run |
+
+Not modelled: signatures and evidence, per-approver challenges, `actionId`, `statePin`, time and `expiresAt`, policy beyond the approver set and `excludeRequester`, enrolment during the window, `task-consent/granted`, and the consent surface.
+
+## TrustTasks/AclDelegation.lean
+
+`acl/*/0.3` and CONVENTIONS §9 (upstream main 101a51d8d): a delegated entry never exceeds its granter and "MUST NOT retain authority its delegator has since lost". `acl/update/0.3` item 5 bounds an amendment by the amending party only, and item 10 keeps `delegatedBy` unchanged, so an amended entry can exceed the entry that `delegatedBy` says bounds it.
+
+| theorem | what it shows |
+|---|---|
+| `within_preserved` | with amendments also bounded by `delegatedBy`, every reachable entry stays within the entry its `delegatedBy` names |
+| `cascade_within` | re-evaluating the changed entry's delegates, and theirs in turn, restores the invariant |
+| `cascade_minimal` | on an ACL that already satisfies it, re-evaluation changes nothing |
+| `within_nonvacuous` | 0 → 1 → 2, then 0 is narrowed: both delegates are narrowed |
+| `grant_bound_needed` | without grant item 4, an entry exceeds its granter |
+| `reeval_needed` | without re-evaluation, a delegate keeps what its delegator lost |
+| `one_level_insufficient` | re-evaluating only direct delegates leaves the second level exceeding the first; grant item 9 and §9 already require the cascade |
+| `amend_escapes_delegator` | a conforming third-party widening (update items 5 and 10) exceeds `delegatedBy`; once the amender is removed, nothing re-evaluates it |
+| `fix_refuses_amend` | bounding the amendment by `delegatedBy` as well refuses it |
+| `queued_in_force_retains` | an entry queued for review and left in force (grant item 9 forbids only leaving it "silently") keeps what its delegator lost; one suspended while queued does not |
+
+Not modelled: roles and ceilings, the separate axes and their shapes, qualifiers, additive capabilities, expiry, purposes, keys, approve authority, re-delegation permission, `lastAuthorityProtected`, compare-and-swap, the policy choice among withdraw, narrow and queue, and re-delegation on amendment.
+
+## TrustTasks/JoinRequests.lean
+
+The `vtc/join-requests` lifecycle (upstream main 101a51d8d): `submit/0.1` and `0.3`, `decide/0.1`, `supplement/0.1`, `withdraw/0.1`, over `status/0.1`'s five states, with `vtc/member-onboarding/0.1` read over it. The ceremony pins the retired `submit/0.1`; under `submit/0.3` a request decided at submission or by a supplement never reaches `decide`, which answers `notPending`. And `withdraw/0.1` sends a maintainer to the decision task, which refuses a deferred request.
+
+| theorem | what it shows |
+|---|---|
+| `final_absorbing` | `approved`, `rejected`, `withdrawn` are final |
+| `closings_le_one` | at most one step closes a request: `withdraw` and `decide` cannot both succeed |
+| `admission_once` / `admitted_once` | a run admits at most once, and ends `approved` exactly when it did |
+| `review_admits_by_decide` | under `review`, every admission is an administrator's `decide` |
+| `deferred_exits` | `deferred` has exits (`supplement`, `withdraw`); the ceremony's note saying it has none is stale |
+| `notPending_needed`, `supplementDeferred_needed`, `withdrawOpen_needed`, `reviewNoAllow_needed` | each rule is needed |
+| `lifecycle_nonvacuous` | deferred → supplemented → referred → approved; and a withdrawal |
+| `ceremony_v01_completes` | under `submit/0.1` every decided request completes the ceremony |
+| `ceremony_v03_never_completes` | under `submit/0.3` an admission or refusal at submission or by supplement never completes it |
+| `proposed_iff_decided` | a completion reading the deciding verdict holds exactly when the request was decided, on either version |
+| `proposed_nonvacuous` | it completes those runs, and not a referred or withdrawn one |
+| `community_cannot_close_deferred` | administrator steps leave a deferred request deferred |
+| `fixed_closes_deferred` | the fix: `decide` may reject, never approve, a deferred request, and keeps every property above |
+
+Not modelled: several requests per applicant, identities, proofs, criteria content, hidden vetting, polls, replay windows, `maxDuration`, retention sweeps, and ceremony steps other than `apply` and `decide`.
+
+## TrustTasks/VettingCount.lean
+
+Counting vetting statements (upstream main 101a51d8d): `vtc/join-requests/manifest/0.4`'s `vetting` object, `vetting/session/0.1`'s pairwise rule, and `vtc/vetting/revoke-statement/0.1`, read with the facts `vetting/show/0.1` records.
+
+| theorem | what it shows |
+|---|---|
+| `global_sound` / `subset_sound` | a satisfied requirement gives `minStatements` distinct vetters, each with a counted statement |
+| `counts_spec` | a counted statement is eligible, of an accepted method, in age, not pairwise, with no matching notice |
+| `global_sound_persons` | the vetters are distinct people wherever the community links non-pairwise DIDs correctly |
+| `third_party_notice_no_effect` | a notice not from the issuer never withdraws |
+| `perVetter_needed`, `filters_needed`, `pairwise_needed`, `matchSender_needed` | each rule is needed (otherwise one vetter with two DIDs meets a minimum of two) |
+| `nonvacuous`, `issuer_notice_withdraws` | the manifest's example criterion is met, and the issuer's notice withdraws |
+| `floor_outside_accepted_unsat(_global)` | a floor on an unaccepted method is unsatisfiable, as community item 4 and applicant item 1 say |
+| `global_not_monotone` | under `vetting/show/0.1`'s reading of the caps and commitment, one more eligible statement fails a passing application |
+| `subset_monotone` / `global_implies_subset` | the reading "some counted set meets every check" is monotone and accepts everything the other does |
+| `squat_swallows_withdrawal` | reading item 7's "repeated notice" as item 3's key (id and digest), another member's earlier notice makes the issuer's a no-op |
+| `keyFull_issuer_effective` / `keyFull_idempotent` | keying on id, digest and sender: the issuer's notice always takes effect, and repeats still change nothing |
+
+Not modelled: signatures, digest computation, `statementType`, claims beyond the commitment, document classes, invitations, hidden vetting, how DIDs are linked (`owner` given), and item 5's re-evaluation. Held statement ids are taken as unique.
+
+## TrustTasks/DidRollback.lean
+
+DID rollback against append-only publishing (upstream main 101a51d8d). `did/publish/0.1` (retired) requires a new chain to be "a valid extension of the prior one"; `did/rollback/0.1` discards published entries above an absolute `targetVersion`, with no expected head in its payload, and says which entries it discards "depends on when it executes"; `did/register/0.1`, which supersedes publish, says only "the new log replaces the old".
+
+| theorem | what it shows |
+|---|---|
+| `publish_append_only` | under publish alone, every log held is a prefix of every later one |
+| `publish_version_stable` | under publish alone, a version once resolvable keeps its entry |
+| `rollback_rewrites_published` | publish versions 1–4, roll back to 3, publish a different version 4: two documents at version 4, each resolvable in turn |
+| `any_discard_permits_rewrite` | any rollback that discards an entry lets that version be rewritten through publish's check |
+| `extension_check_needed` | register's rule as written rewrites version 2 with no rollback |
+| `range_rule_needed` | without the lower bound, a rollback to 0 discards the genesis entry |
+| `delayed_rollback_discards_unseen` | a rollback executed after a publish it never saw discards that entry |
+| `count_cas_sound` / `count_cas_refuses_delayed` | an expected `versionCount` suffices when only publishes intervene |
+| `count_cas_insufficient` | it does not when another rollback intervenes |
+| `head_cas_sound` / `head_cas_refuses` | an expected head digest committing to the chain discards exactly what the requester saw |
+| `cas_nonvacuous` | an undelayed rollback passes both checks |
+| `guarded_append_only` / `guarded_refuses_rewrite` | refusing rollback below the highest resolved version restores append-only |
+| `guarded_rollback_noop` | since publish resolves at once, that guard makes every rollback a no-op: a design choice, not a fix |
+
+Not modelled: signatures and entry validity, ownership and admin authority, disabled slots, `force`, deletion, witnesses, resolver caches, and time beyond step order.
+
+## TrustTasks/VotingTrustees.lean
+
+Trustee key generation and threshold decryption (upstream main 101a51d8d, `voting/_shared/0.1/CONVENTIONS.md` §9.6–9.7). A confirmation model: the counting the rules rely on holds as written.
+
+| theorem | what it shows |
+|---|---|
+| `formed_sound` | a formed key has at least `t` distinct qualified dealers, every complaint against each one justified |
+| `formed_has_honest_dealer` | with fewer than `t` corrupt trustees, some qualified dealer is honest |
+| `qualified_check_needed` | without the "fewer than `t` qualify" rule, a corrupt trustee complaining of everyone at the deadline makes the key its own |
+| `justified_restores` | answered complaints are void, all qualify, the key forms |
+| `no_key_when_t_gt_n` | with `t > n` no key ever forms (create's bound protects liveness) |
+| `opens_has_honest` / `corrupt_cannot_open` | opening needs an honest trustee's partial; fewer than `t` corrupt trustees cannot open |
+| `distinct_needed` | counted without distinctness, one trustee's partial sent twice meets `t = 2` |
+| `opens_nonvacuous` | partials from two distinct trustees open at `t = 2` |
+
+Not modelled: the group, polynomials, commitments, shares and proofs; transport keys; target authorization; timing; and several DIDs held by one party.
+
+Check: `./check.sh` builds every model, prints each theorem's axiom footprint (`Checks.lean`), fails on `sorry`, on any axiom beyond the three above, or on a theorem missing from `Checks.lean`, and replays the kernel independently (`leanchecker --fresh`).
 
 Prepared with agent assistance under the author's direction and reviewed by the author; every claim is kernel-checked and reproducible from this directory.

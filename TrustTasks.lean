@@ -4,3 +4,9 @@ import TrustTasks.Rulings
 import TrustTasks.Roster
 import TrustTasks.VtcRoles
 import TrustTasks.Onboarding
+import TrustTasks.DidRollback
+import TrustTasks.VotingTrustees
+import TrustTasks.TaskConsent
+import TrustTasks.AclDelegation
+import TrustTasks.JoinRequests
+import TrustTasks.VettingCount
