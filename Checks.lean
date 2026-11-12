@@ -182,3 +182,8 @@ import TrustTasks
 #print axioms TrustTasks.VettingCount.squat_swallows_withdrawal
 #print axioms TrustTasks.VettingCount.keyFull_issuer_effective
 #print axioms TrustTasks.VettingCount.keyFull_idempotent
+#print axioms TrustTasks.BlockedSender.Ack.ack_block_unobservable
+#print axioms TrustTasks.BlockedSender.Ack.ack_errors_kept
+#print axioms TrustTasks.BlockedSender.Ack.ack_no_false_evidence
+#print axioms TrustTasks.BlockedSender.Resp.no_hidden_block_with_response
+#print axioms TrustTasks.BlockedSender.Resp.block_as_accepted_counterexample

@@ -18,6 +18,7 @@ Lean 4 models of Trust Tasks protocol families and ceremonies. Core Lean only (n
 | [VettingCount](TrustTasks/VettingCount.lean) | vetting statement counting | main 101a51d8d; [tf#1222](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1222) | **gap**: caps read globally are non-monotone; on one reading a notice swallows the issuer's withdrawal | 24 |
 | [DidRollback](TrustTasks/DidRollback.lean) | `did-management/did/*` rollback, register | main 101a51d8d; [tf#1223](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1223) | **gap**: rollback rewrites published versions and depends on timing; register drops the extension check | 17 |
 | [VotingTrustees](TrustTasks/VotingTrustees.lean) | `voting/trustees/*` | main 101a51d8d | confirmation: the threshold counting holds as written | 13 |
+| [BlockedSender](TrustTasks/BlockedSender.lean) | a blocked sender against ruling #37 | [spec#31](https://github.com/trustoverip/dtgwg-trust-tasks-spec/issues/31) (2026-10-30 comment) | the allowance is sound exactly when the task has no `#response`; with one, a hidden block hands the sender evidence of a task that did not run | 5 |
 
 A **gap** is a counterexample admitted by the rules as written, stated in the file with the spec text it reads and, where one exists, a proven fix. Quoted spec text is from the upstream commit named. Every gap has been raised upstream: `tf#` is an issue or PR on trustoverip/dtgwg-trust-tasks-tf, `spec#` an issue on trustoverip/dtgwg-trust-tasks-spec.
 
@@ -270,6 +271,20 @@ Trustee key generation and threshold decryption (upstream main 101a51d8d, `votin
 | `opens_nonvacuous` | partials from two distinct trustees open at `t = 2` |
 
 Not modelled: the group, polynomials, commitments, shares and proofs; transport keys; target authorization; timing; and several DIDs held by one party.
+
+## TrustTasks/BlockedSender.lean
+
+The allowance asked of ruling #37 on spec#31: in RLTP a blocked sender observes what an unblocked one would, so a refusal on account of a block is answered as an accepted document would be (RLTP-DEL-6240 to 6260), and no RLTP type defines a `#response` (RLTP-DEL-3020).
+
+| theorem | what it shows |
+|---|---|
+| `ack_block_unobservable` | with no `#response`, a block answered by the same acknowledgement as a delivery is unobservable |
+| `ack_errors_kept` | the technical errors survive: an invalid document is still refused |
+| `ack_no_false_evidence` | an acknowledgement is never outcome evidence, so no reader is told a task ran that did not |
+| `no_hidden_block_with_response` | with a `#response`, any encoding that answers a block as some verdict, while that verdict's reply is evidence as #37 requires, gives the blocked sender evidence of a task that did not run |
+| `block_as_accepted_counterexample` | the allowance read literally on such a task: #37 holds on every run, the block is hidden, and the sender holds a citable `admit` |
+
+Not modelled: signatures, digests, timing and every other side channel (an unobservable block here means only that the reply is the same), and the standard codes other than `malformedRequest`.
 
 Check: `./check.sh` builds every model, prints each theorem's axiom footprint (`Checks.lean`), fails on `sorry`, on any axiom beyond the three above, or on a theorem missing from `Checks.lean`, and replays the kernel independently (`leanchecker --fresh`).
 

@@ -10,3 +10,4 @@ import TrustTasks.TaskConsent
 import TrustTasks.AclDelegation
 import TrustTasks.JoinRequests
 import TrustTasks.VettingCount
+import TrustTasks.BlockedSender
