@@ -25,17 +25,17 @@ A **gap** is a counterexample admitted by the rules as written, stated in the fi
 
 ## Evidence
 
-[`evidence/2026-11-12_tt188/`](evidence/2026-11-12_tt188/) seals this repository at `34d3353` as a κ evidence bundle: every source file, the raw `Checks.lean` audit output, and one object per audited theorem (188), each with a `refers-to` edge to the file that states it.
+[`evidence/2026-11-17_tt205/`](evidence/2026-11-17_tt205/) seals this repository at `3c616dc` as a κ evidence bundle: every source file, the raw `Checks.lean` audit output, and one object per audited theorem (205), each with a `refers-to` edge to the file that states it.
 
-Root: `sha256:c52609b736406d6fe646db7e735e7380d4fb6309cc9c481480fb9709c5077e8e` (BLAKE3 `99bb5f9031a804dfff8d5dbb4a17c3b499de6cea541ef480775170a9348dd63d`).
+Root: `sha256:7563fb09de08ad10047c4f64247991f8c4a59e5d0bb026f0879d5a01fc6f78a3` (BLAKE3 `7fbf0740c5459305515a92f9f287cdcb4620870b98c9897679e30e22df0548e4`).
 
 Re-derive every hash from the bundle alone with [kappa-evidence-mage](https://github.com/mitchuski/kappa-evidence-mage):
 
 ```bash
-python kappa-evidence-mage/verify_bundle.py evidence/2026-11-12_tt188   # RESULT: OK
+python kappa-evidence-mage/verify_bundle.py evidence/2026-11-17_tt205   # RESULT: OK
 ```
 
-The earlier seal, [`evidence/2026-11-12_tt183/`](evidence/2026-11-12_tt183/) (183 theorems at `c220a49`, root `sha256:adcfbf13822fda9e630609b7fa503fb01727cc32b2a978a1c71c71f3e98a15b6`), stays as it was minted: it is the one cited on tf#904. Bundle files are bytes, not text (`.gitattributes`), so a checkout never rewrites them. The roots are also listed with every hash under them at [formal.mages.city](https://formal.mages.city/).
+The earlier seals stay as they were minted: [`evidence/2026-11-12_tt188/`](evidence/2026-11-12_tt188/) (188 theorems at `34d3353`, root `sha256:c52609b736406d6fe646db7e735e7380d4fb6309cc9c481480fb9709c5077e8e`) and [`evidence/2026-11-12_tt183/`](evidence/2026-11-12_tt183/) (183 theorems at `c220a49`, root `sha256:adcfbf13822fda9e630609b7fa503fb01727cc32b2a978a1c71c71f3e98a15b6`), the one cited on tf#904. Bundle files are bytes, not text (`.gitattributes`), so a checkout never rewrites them. The roots are also listed with every hash under them at [formal.mages.city](https://formal.mages.city/).
 
 ## TrustTasks/MyTerms.lean
 

@@ -1,0 +1,205 @@
+'TrustTasks.MyTerms.performed_ok' depends on axioms: [propext]
+'TrustTasks.MyTerms.decision_iff_contract' does not depend on any axioms
+'TrustTasks.MyTerms.decision_member_suffices' depends on axioms: [propext]
+'TrustTasks.MyTerms.rejectedRun_adm' depends on axioms: [propext, Quot.sound]
+'TrustTasks.MyTerms.presence_completion_unsound' depends on axioms: [propext, Quot.sound]
+'TrustTasks.MyTerms.followup_bound' depends on axioms: [propext]
+'TrustTasks.MyTerms.at_most_one_followup' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.MyTerms.issuer_binding_needed' depends on axioms: [propext, Quot.sound]
+'TrustTasks.MyTerms.round_limit_needed' depends on axioms: [propext, Quot.sound]
+'TrustTasks.MyTerms.ceremony_sound' depends on axioms: [propext]
+'TrustTasks.MyTerms.exchange_binding_needed' depends on axioms: [propext]
+'TrustTasks.MyTerms.fullRun_adm' depends on axioms: [propext, Quot.sound]
+'TrustTasks.MyTerms.ceremony_sound_nonvacuous' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Ceremony.complete_refines_today' does not depend on any axioms
+'TrustTasks.Ceremony.complete_sound' does not depend on any axioms
+'TrustTasks.Ceremony.today_completes_refused_seal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.Ceremony.pou_sound' does not depend on any axioms
+'TrustTasks.Ceremony.acceptedRun_complete' depends on axioms: [propext]
+'TrustTasks.Ceremony.pou_sound_nonvacuous' depends on axioms: [propext]
+'TrustTasks.Ceremony.party_binding_needed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.Rulings.Hold.inv_init' depends on axioms: [propext]
+'TrustTasks.Rulings.Hold.inv_step' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Rulings.Hold.inv_reach' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Rulings.Hold.hold_next_step_sound' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Rulings.Hold.hold_next_step_nonvacuous' depends on axioms: [propext]
+'TrustTasks.Rulings.Hold.hold_as_error_runs_twice' depends on axioms: [propext]
+'TrustTasks.Rulings.Verdict.verdict_as_data_sound' depends on axioms: [propext]
+'TrustTasks.Rulings.Verdict.verdict_as_data_nonvacuous' does not depend on any axioms
+'TrustTasks.Rulings.Verdict.no_reader_of_collision' does not depend on any axioms
+'TrustTasks.Rulings.Verdict.refusal_as_denied_conflates' depends on axioms: [propext]
+'TrustTasks.Rulings.Verdict.refusal_as_code_misread' depends on axioms: [propext]
+'TrustTasks.Rulings.Verdict.denial_as_verdict_conflates' depends on axioms: [propext]
+'TrustTasks.Rulings.AlreadyInState.upd_self' depends on axioms: [Quot.sound]
+'TrustTasks.Rulings.AlreadyInState.set_idempotent' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Rulings.AlreadyInState.set_ok_iff_exists' depends on axioms: [propext]
+'TrustTasks.Rulings.AlreadyInState.create_ok_iff_created' depends on axioms: [propext]
+'TrustTasks.Rulings.AlreadyInState.already_in_state_nonvacuous' does not depend on any axioms
+'TrustTasks.Rulings.AlreadyInState.set_strict_retry_loop' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Rulings.AlreadyInState.create_lax_misleads' depends on axioms: [propext]
+'TrustTasks.Rulings.AlreadyInState.set_upsert_phantom' depends on axioms: [propext]
+'TrustTasks.Rulings.Defaults.required_sound' depends on axioms: [propext]
+'TrustTasks.Rulings.Defaults.required_refuses_omission' depends on axioms: [propext]
+'TrustTasks.Rulings.Defaults.required_nonvacuous' depends on axioms: [propext]
+'TrustTasks.Rulings.Defaults.defaulted_quorum_unsound' depends on axioms: [propext]
+'TrustTasks.Rulings.Defaults.omission_indistinguishable' depends on axioms: [propext]
+'TrustTasks.Rulings.Defaults.shared_default_wrong_somewhere' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.Rulings.Defaults.default_sound_iff_governance' depends on axioms: [propext]
+'TrustTasks.Roster.sealed_in_roster' depends on axioms: [propext]
+'TrustTasks.Roster.counter_escapes_exchange' depends on axioms: [propext]
+'TrustTasks.Roster.covered_sound' depends on axioms: [propext]
+'TrustTasks.Roster.covered_refuses_broad_counter' depends on axioms: [propext]
+'TrustTasks.Roster.covered_admits_narrow_counter' depends on axioms: [propext]
+'TrustTasks.Roster.covered_on_accept' depends on axioms: [propext]
+'TrustTasks.Roster.code_not_unique' depends on axioms: [propext]
+'TrustTasks.VtcRoles.remove_last_holder' does not depend on any axioms
+'TrustTasks.VtcRoles.no_recovery' does not depend on any axioms
+'TrustTasks.VtcRoles.removal_bypasses_item10' does not depend on any axioms
+'TrustTasks.VtcRoles.guarded_floor' does not depend on any axioms
+'TrustTasks.VtcRoles.guarded_refuses_last' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VtcRoles.guarded_nonvacuous' does not depend on any axioms
+'TrustTasks.VtcRoles.removed_still_assigns' does not depend on any axioms
+'TrustTasks.VtcRoles.removed_ending_entry_cannot_assign' does not depend on any axioms
+'TrustTasks.Onboarding.published_is_apply_and_decide' does not depend on any axioms
+'TrustTasks.Onboarding.reciprocate_never_required' does not depend on any axioms
+'TrustTasks.Onboarding.presence_only_blind' depends on axioms: [propext]
+'TrustTasks.Onboarding.no_presence_predicate' depends on axioms: [propext]
+'TrustTasks.Onboarding.proposed_is_intended' does not depend on any axioms
+'TrustTasks.Onboarding.proposed_nonvacuous' does not depend on any axioms
+'TrustTasks.DidRollback.prefix_trans' depends on axioms: [propext]
+'TrustTasks.DidRollback.publish_append_only' depends on axioms: [propext]
+'TrustTasks.DidRollback.publish_version_stable' depends on axioms: [propext]
+'TrustTasks.DidRollback.rollback_rewrites_published' depends on axioms: [propext]
+'TrustTasks.DidRollback.any_discard_permits_rewrite' depends on axioms: [propext, Quot.sound]
+'TrustTasks.DidRollback.extension_check_needed' depends on axioms: [propext]
+'TrustTasks.DidRollback.range_rule_needed' does not depend on any axioms
+'TrustTasks.DidRollback.delayed_rollback_discards_unseen' depends on axioms: [propext, Quot.sound]
+'TrustTasks.DidRollback.count_cas_sound' depends on axioms: [propext, Quot.sound]
+'TrustTasks.DidRollback.count_cas_refuses_delayed' depends on axioms: [propext]
+'TrustTasks.DidRollback.count_cas_insufficient' depends on axioms: [propext, Quot.sound]
+'TrustTasks.DidRollback.head_cas_sound' does not depend on any axioms
+'TrustTasks.DidRollback.head_cas_refuses' depends on axioms: [propext]
+'TrustTasks.DidRollback.cas_nonvacuous' does not depend on any axioms
+'TrustTasks.DidRollback.guarded_append_only' depends on axioms: [propext, Quot.sound]
+'TrustTasks.DidRollback.guarded_rollback_noop' depends on axioms: [propext, Quot.sound]
+'TrustTasks.DidRollback.guarded_refuses_rewrite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.length_le_of_nodup_subset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.exists_honest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.qualified_nodup' depends on axioms: [propext]
+'TrustTasks.VotingTrustees.mem_qualified' depends on axioms: [propext]
+'TrustTasks.VotingTrustees.formed_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.formed_has_honest_dealer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.no_key_when_t_gt_n' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.qualified_check_needed' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VotingTrustees.justified_restores' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VotingTrustees.opens_has_honest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.corrupt_cannot_open' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.distinct_needed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VotingTrustees.opens_nonvacuous' depends on axioms: [propext, Quot.sound]
+'TrustTasks.TaskConsent.at_most_once' depends on axioms: [propext]
+'TrustTasks.TaskConsent.approvals_nodup' depends on axioms: [propext, Quot.sound]
+'TrustTasks.TaskConsent.enrolled_sub' depends on axioms: [propext]
+'TrustTasks.TaskConsent.execution_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.TaskConsent.deny_invariant' depends on axioms: [propext]
+'TrustTasks.TaskConsent.deny_final' depends on axioms: [propext]
+'TrustTasks.TaskConsent.granted_closed' depends on axioms: [propext]
+'TrustTasks.TaskConsent.execution_sound_nonvacuous' does not depend on any axioms
+'TrustTasks.TaskConsent.distinct_needed' does not depend on any axioms
+'TrustTasks.TaskConsent.consume_at_execution_needed' does not depend on any axioms
+'TrustTasks.TaskConsent.recheck_needed' depends on axioms: [propext, Quot.sound]
+'TrustTasks.TaskConsent.deny_closes_needed' does not depend on any axioms
+'TrustTasks.TaskConsent.exclusion_needed' does not depend on any axioms
+'TrustTasks.TaskConsent.runs_only_if_feasible' depends on axioms: [propext, Quot.sound]
+'TrustTasks.TaskConsent.not_feasible_qOver' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.TaskConsent.unmeetable_accepted_never_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.AclDelegation.underF_stable' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.under_eq' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.under_lt' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.effF_stable' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.eff_none' depends on axioms: [propext]
+'TrustTasks.AclDelegation.eff_some' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.eff_not_under' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.eff_sub' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.auth_cascade' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.cascade_within' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.set_forest' does not depend on any axioms
+'TrustTasks.AclDelegation.cascade_forest' does not depend on any axioms
+'TrustTasks.AclDelegation.step_within' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.within_preserved' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.cascade_minimal' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.root_within' does not depend on any axioms
+'TrustTasks.AclDelegation.root_forest' does not depend on any axioms
+'TrustTasks.AclDelegation.within_nonvacuous' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.grant_bound_needed' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.reeval_needed' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.one_level_insufficient' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.twoRoots_within' depends on axioms: [propext]
+'TrustTasks.AclDelegation.amend_escapes_delegator' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.fix_refuses_amend' depends on axioms: [propext, Quot.sound]
+'TrustTasks.AclDelegation.queued_in_force_retains' depends on axioms: [propext, Quot.sound]
+'TrustTasks.JoinRequests.today_good' does not depend on any axioms
+'TrustTasks.JoinRequests.fixed_good' does not depend on any axioms
+'TrustTasks.JoinRequests.final_absorbing' depends on axioms: [propext]
+'TrustTasks.JoinRequests.run_from_final' depends on axioms: [propext]
+'TrustTasks.JoinRequests.closings_le_one' depends on axioms: [propext, Quot.sound]
+'TrustTasks.JoinRequests.admission_once' depends on axioms: [propext, Quot.sound]
+'TrustTasks.JoinRequests.admitted_once' depends on axioms: [propext, Quot.sound]
+'TrustTasks.JoinRequests.review_admits_by_decide' depends on axioms: [propext]
+'TrustTasks.JoinRequests.deferred_exits' depends on axioms: [propext]
+'TrustTasks.JoinRequests.notPending_needed' depends on axioms: [propext]
+'TrustTasks.JoinRequests.supplementDeferred_needed' depends on axioms: [propext]
+'TrustTasks.JoinRequests.withdrawOpen_needed' depends on axioms: [propext]
+'TrustTasks.JoinRequests.reviewNoAllow_needed' depends on axioms: [propext]
+'TrustTasks.JoinRequests.lifecycle_nonvacuous' depends on axioms: [propext]
+'TrustTasks.JoinRequests.ceremony_v01_completes' depends on axioms: [propext]
+'TrustTasks.JoinRequests.ceremony_v03_never_completes' depends on axioms: [propext]
+'TrustTasks.JoinRequests.proposed_iff_decided' depends on axioms: [propext]
+'TrustTasks.JoinRequests.proposed_nonvacuous' depends on axioms: [propext]
+'TrustTasks.JoinRequests.community_cannot_close_deferred' depends on axioms: [propext]
+'TrustTasks.JoinRequests.fixed_closes_deferred' depends on axioms: [propext]
+'TrustTasks.VettingCount.mem_allMethods' depends on axioms: [propext]
+'TrustTasks.VettingCount.mem_allRelationships' depends on axioms: [propext]
+'TrustTasks.VettingCount.mem_dedup' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VettingCount.nodup_dedup' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VettingCount.counts_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VettingCount.checks_sound' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VettingCount.global_sound' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VettingCount.subset_sound' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VettingCount.global_sound_persons' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VettingCount.third_party_notice_no_effect' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VettingCount.nonvacuous' does not depend on any axioms
+'TrustTasks.VettingCount.perVetter_needed' does not depend on any axioms
+'TrustTasks.VettingCount.filters_needed' does not depend on any axioms
+'TrustTasks.VettingCount.pairwise_needed' does not depend on any axioms
+'TrustTasks.VettingCount.matchSender_needed' does not depend on any axioms
+'TrustTasks.VettingCount.issuer_notice_withdraws' does not depend on any axioms
+'TrustTasks.VettingCount.floor_outside_accepted_unsat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VettingCount.floor_outside_accepted_unsat_global' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VettingCount.global_not_monotone' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VettingCount.subset_monotone' depends on axioms: [propext, Quot.sound]
+'TrustTasks.VettingCount.global_implies_subset' does not depend on any axioms
+'TrustTasks.VettingCount.squat_swallows_withdrawal' does not depend on any axioms
+'TrustTasks.VettingCount.keyFull_issuer_effective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.VettingCount.keyFull_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'TrustTasks.BlockedSender.Ack.ack_block_unobservable' does not depend on any axioms
+'TrustTasks.BlockedSender.Ack.ack_errors_kept' does not depend on any axioms
+'TrustTasks.BlockedSender.Ack.ack_no_false_evidence' depends on axioms: [propext]
+'TrustTasks.BlockedSender.Resp.no_hidden_block_with_response' depends on axioms: [propext]
+'TrustTasks.BlockedSender.Resp.block_as_accepted_counterexample' depends on axioms: [propext]
+'TrustTasks.Mages.CityKey.Claim.mem_all' depends on axioms: [propext]
+'TrustTasks.Mages.CityKey.state_match_iff' does not depend on any axioms
+'TrustTasks.Mages.CityKey.absent_never_match' does not depend on any axioms
+'TrustTasks.Mages.CityKey.unavailable_never_match' does not depend on any axioms
+'TrustTasks.Mages.CityKey.determine_match_checked' depends on axioms: [propext]
+'TrustTasks.Mages.CityKey.holds_never_match' depends on axioms: [propext]
+'TrustTasks.Mages.CityKey.holds_claimed_unverified' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Mages.CityKey.ok_iff_no_mismatch' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Mages.CityKey.mem_unverified_iff' depends on axioms: [propext]
+'TrustTasks.Mages.CityKey.ok_not_permission' depends on axioms: [propext]
+'TrustTasks.Mages.CityKey.collapse_accepts_unchecked' depends on axioms: [propext]
+'TrustTasks.Mages.Constellation.commit_ok_eq' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Mages.Constellation.commit_accepted_bounds' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Mages.Constellation.step_append_only' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Mages.Constellation.one_commit_per_mark_moon' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Mages.Constellation.second_commit_refused' depends on axioms: [propext, Quot.sound]
+'TrustTasks.Mages.Constellation.honest_commit_accepted' depends on axioms: [propext, Quot.sound]
