@@ -11,3 +11,4 @@ import TrustTasks.AclDelegation
 import TrustTasks.JoinRequests
 import TrustTasks.VettingCount
 import TrustTasks.BlockedSender
+import TrustTasks.Mages

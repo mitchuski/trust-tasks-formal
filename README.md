@@ -19,6 +19,7 @@ Lean 4 models of Trust Tasks protocol families and ceremonies. Core Lean only (n
 | [DidRollback](TrustTasks/DidRollback.lean) | `did-management/did/*` rollback, register | main 101a51d8d; [tf#1223](https://github.com/trustoverip/dtgwg-trust-tasks-tf/issues/1223) | **gap**: rollback rewrites published versions and depends on timing; register drops the extension check | 17 |
 | [VotingTrustees](TrustTasks/VotingTrustees.lean) | `voting/trustees/*` | main 101a51d8d | confirmation: the threshold counting holds as written | 13 |
 | [BlockedSender](TrustTasks/BlockedSender.lean) | a blocked sender against ruling #37 | [spec#31](https://github.com/trustoverip/dtgwg-trust-tasks-spec/issues/31) (2026-10-30 comment) | the allowance is sound exactly when the task has no `#response`; with one, a hidden block hands the sender evidence of a task that did not run | 5 |
+| [Mages](TrustTasks/Mages.lean) | `mages/city-key/present`, `mages/constellation/commit` (private family, drafts 0.1) | draft text read 2026-11-17 | confirmation: four-state City Key determination sound, `ok` is not a permission, collapsing `unavailable` into `match` reads an unchecked claim as checked; one commit per mark and moon | 17 |
 
 A **gap** is a counterexample admitted by the rules as written, stated in the file with the spec text it reads and, where one exists, a proven fix. Quoted spec text is from the upstream commit named. Every gap has been raised upstream: `tf#` is an issue or PR on trustoverip/dtgwg-trust-tasks-tf, `spec#` an issue on trustoverip/dtgwg-trust-tasks-spec.
 
@@ -285,6 +286,39 @@ The allowance asked of ruling #37 on spec#31: in RLTP a blocked sender observes 
 | `block_as_accepted_counterexample` | the allowance read literally on such a task: #37 holds on every run, the block is hidden, and the sender holds a citable `admit` |
 
 Not modelled: signatures, digests, timing and every other side channel (an unobservable block here means only that the reply is the same), and the standard codes other than `malformedRequest`.
+
+## TrustTasks/Mages.lean
+
+Two invariants of the `mages` family, a PRIVATE Trust Task family whose Type URIs sit under `https://tasks.mages.city/spec/mages/`. Both specifications are drafts (0.1, status `draft`); the model reads their text as it stood on 2026-11-17, and the City Key reader as written in the reference implementation (`gate/citykey.mjs`, `verifyKey`).
+
+M5, `city-key/present/0.1` Verification: each of six claims (`kappa`, `packetProofs`, `packetsRoot`, `did`, `holds`, `chains`) gets one of four states from (claimed, checkable, agrees); `ok` is true when no state is `mismatch`; `unverified` lists the claims `absent` or `unavailable`; a declared Hold is never checkable.
+
+| theorem | what it shows |
+|---|---|
+| `Claim.mem_all` | the six claims are all listed (helper) |
+| `state_match_iff` | `match` exactly when the claim was made, checkable, and the re-derivation agreed |
+| `absent_never_match` | `absent` is exactly an unmade claim, and is never `match` |
+| `unavailable_never_match` | `unavailable` is exactly a claim made without material to check it, and is never `match` |
+| `determine_match_checked` | on a presented key, a claim reads `match` only if it was checked and agreed |
+| `holds_never_match` | the Hold is always `absent` or `unavailable`, never `match` |
+| `holds_claimed_unverified` | a declared Hold is always on the `unverified` list |
+| `ok_iff_no_mismatch` | `ok` holds exactly when no claim is `mismatch` |
+| `mem_unverified_iff` | `unverified` is exactly the `absent` and `unavailable` claims |
+| `ok_not_permission` | the spec's example key (κ, DID, packets root, no packets given) is `ok` with four unverified claims, its packets root `unavailable` |
+| `collapse_accepts_unchecked` | a two-valued reading that maps `unavailable` to `match` shows that never-checked packets root as `match`; the four-state reading lists it unverified |
+
+M1, `constellation/commit/0.1` Conformance, consumer steps 1 to 6: schema validation (1 to 42 deliberate stars), then `notThisMoon`, `duplicateStar`, `hiddenStarNotFound`, `workInsufficient` (the last two as given bits), `alreadyCommitted`, then append the stars and one `egg/find` row and record the mark and moon. A chain moves by accepted commits and by new moons opening.
+
+| theorem | what it shows |
+|---|---|
+| `commit_ok_eq` | an accepted commit passed every refusal, in order, and its effect is exactly the append and the record (helper) |
+| `commit_accepted_bounds` | an accepted commit appends 2 to 43 rows after the existing ones, over deliberate stars with distinct leaves |
+| `step_append_only` | every step keeps the existing rows as a prefix and every committed (mark, moon) |
+| `one_commit_per_mark_moon` | on every reachable chain, each (mark, moon) is committed at most once |
+| `second_commit_refused` | after a commit, no further commit under the same mark and moon is accepted, whatever its stars, egg or nonce |
+| `honest_commit_accepted` | non-vacuity: the draft's three-star example is accepted on a fresh chain, appends four rows, and the same commit again is refused `alreadyCommitted` |
+
+Not modelled: the hashes themselves (κ canonicalisation, packet and face folds, `did:key`, link hashes, the egg and the proof of work, each taken as a given bit), leaf hex syntax, places, the rate limit, signatures, mark squatting, and the bit-for-bit retry absorption of SPEC §7.2 item 11 (here a retry is refused as any second commit is). The reference reader computes its `ok` from the raw comparisons rather than from `states`, so a malformed `chains` member presented with faces reads `mismatch` in `states` while its `ok` stays true; the model uses the spec's definition.
 
 Check: `./check.sh` builds every model, prints each theorem's axiom footprint (`Checks.lean`), fails on `sorry`, on any axiom beyond the three above, or on a theorem missing from `Checks.lean`, and replays the kernel independently (`leanchecker --fresh`).
 
